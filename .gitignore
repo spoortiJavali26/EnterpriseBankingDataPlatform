@@ -34,3 +34,16 @@ Thumbs.db
 # Logs
 *.log
 
+# Gemini API 
+**/config.py
+
+# Secrets
+.env
+.env.*
+
+# Python cache
+*.ipynb_checkpoints
+
+# Power BI Report
+*.pbix
+
