@@ -1,0 +1,335 @@
+
+# Google Gemini AI Integration
+
+## Objective
+
+Integrate Google Gemini AI into the Enterprise Banking Data Platform to automatically generate executive banking and AML summaries from reporting data and store them in PostgreSQL for Power BI reporting.
+
+-----
+
+Refer : EnterpriseBankingDataPlatform\AI\01_Generate_AI_Summary.ipynb 
+
+----
+
+# Step 1 — Generate Gemini API Key
+
+1. Open Google AI Studio.
+2. Generate a new Gemini API Key.
+3. Copy the API Key.
+
+---
+
+# Step 2 — Secure API Key
+
+Created a configuration file.
+
+Project Structure
+
+AI/
+│
+└── config.py
+
+config.py
+
+```python
+GEMINI_API_KEY = "YOUR_API_KEY"
+```
+
+Added to `.gitignore`
+
+```gitignore
+**/config.py
+```
+
+This prevents the API key from being uploaded to GitHub.
+
+---
+
+# Step 3 — Install Gemini Package
+
+Activated project virtual environment.
+
+Command
+
+```bash
+.\venv\Scripts\activate
+```
+
+Installed package
+
+```bash
+python -m pip install google-genai
+```
+
+---
+
+# Issue 1
+
+Error
+
+```text
+ModuleNotFoundError:
+No module named 'google'
+```
+
+Cause
+
+Notebook was using the virtual environment from the previous Manufacturing project instead of the Enterprise Banking project.
+
+---
+
+# Step 4 — Verify Python Environment
+
+Checked active Python executable.
+
+Command
+
+```bash
+python -c "import sys; print(sys.executable)"
+```
+
+Verified Enterprise Banking virtual environment.
+
+---
+
+# Step 5 — Create Jupyter Kernel
+
+Installed project kernel.
+
+Command
+
+```bash
+python -m ipykernel install --user --name EnterpriseBankingDataPlatform --display-name "Enterprise Banking (venv)"
+```
+
+Verified kernels.
+
+Command
+
+```bash
+jupyter kernelspec list
+```
+
+Selected **Enterprise Banking (venv)** inside VS Code.
+
+---
+
+# Issue 2
+
+VS Code displayed only the Manufacturing kernel.
+
+Resolution
+
+- Closed VS Code.
+- Reopened project.
+- Registered Enterprise Banking kernel.
+- Selected Enterprise Banking kernel.
+
+---
+
+# Step 6 — Gemini Connection
+
+Connected using the new SDK.
+
+```python
+from google import genai
+from config import GEMINI_API_KEY
+
+client = genai.Client(api_key=GEMINI_API_KEY)
+
+print("Gemini Connected Successfully!")
+```
+
+Connection Successful.
+
+---
+
+# Issue 3
+
+Initially used
+
+```python
+import google.generativeai as genai
+```
+
+Received deprecation warning.
+
+Resolution
+
+Migrated to
+
+```python
+from google import genai
+```
+
+using the latest Google GenAI SDK.
+
+---
+
+# Step 7 — Generate Banking Executive Summary
+
+Created prompt using reporting DataFrames.
+
+Included
+
+- Peak Banking Month
+- Fraud KPIs
+- Typology Summary
+- Transaction Type Summary
+- Merchant Category Summary
+
+Generated summary using
+
+```python
+client.models.generate_content()
+```
+
+---
+
+# Step 8 — Store Banking Summary
+
+Updated PostgreSQL table
+
+```text
+reporting.ai_dashboard_summary
+```
+
+using SQLAlchemy.
+
+Verified successful update.
+
+---
+
+# Step 9 — Generate AML Executive Summary
+
+Created AML-specific prompt.
+
+Included
+
+- Fraud KPIs
+- Typology Summary
+- Transaction Types
+- Merchant Categories
+
+Generated separate AML summary.
+
+Stored in PostgreSQL.
+
+---
+
+# Step 10 — Power BI Integration
+
+Imported
+
+```text
+reporting.ai_dashboard_summary
+```
+
+into Power BI.
+
+Created two dedicated pages
+
+- Banking AI Summary
+- AML AI Summary
+
+Navigation buttons
+
+```
+Executive Banking Dashboard
+        │
+        ▼
+ View AI Summary
+
+AML Dashboard
+        │
+        ▼
+ View AI Summary
+```
+
+Displayed summary using Dynamic Values in Text Box.
+
+---
+
+# Prompt Improvement
+
+Initial prompts produced unsupported business assumptions.
+
+Example
+
+- Customer loyalty
+- Spending behaviour
+- Market conditions
+
+Updated prompt with
+
+```
+Only draw conclusions that are directly supported by the provided data.
+
+Do not make assumptions about customer behaviour, loyalty or market conditions.
+```
+
+Result
+
+AI summaries became factual, professional and business-oriented.
+
+---
+
+# GitHub Preparation
+
+Created
+
+```
+requirements.txt
+```
+
+using
+
+```bash
+pip freeze > requirements.txt
+```
+
+Added
+
+```gitignore
+*.pbix
+```
+
+Power BI report exceeded GitHub's 100 MB limit.
+
+Created
+
+```
+PowerBI/README.md
+```
+
+to explain the missing PBIX file.
+
+Stored dashboard screenshots inside
+
+```
+Images/
+```
+
+Stored development screenshots inside
+
+```
+Documentation/Development Logs/
+```
+
+---
+
+# Final Result
+
+Successfully integrated Google Gemini AI into the Enterprise Banking Data Platform.
+
+Completed
+
+- Secure API configuration
+- Enterprise virtual environment
+- Jupyter kernel setup
+- AI-generated Banking Summary
+- AI-generated AML Summary
+- PostgreSQL integration
+- Power BI integration
+- GitHub-ready repository
+

@@ -4,9 +4,12 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Virtual Environment
+# Virtual Environment 
 venv/
 .env/
+
+# Environment Variables
+.env
 
 # Jupyter
 .ipynb_checkpoints/
