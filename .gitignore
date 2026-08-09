@@ -50,3 +50,9 @@ Thumbs.db
 # Power BI Report
 *.pbix
 
+# PostgreSQL database backups
+*.dump
+*.backup
+
+
+
