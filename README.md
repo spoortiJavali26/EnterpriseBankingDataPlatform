@@ -104,8 +104,8 @@ EnterpriseBankingDataPlatform
 - Power BI Executive Dashboards
 - AI-powered Executive Summaries using Google Gemini
 - Git Version Control
-- Cloud Deployment (In Progress)
-- CI/CD Pipeline (Planned)
+- Cloud Deployment 
+- CI/CD Pipeline 
 
 ---
 
